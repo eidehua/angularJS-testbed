@@ -6,15 +6,63 @@
   <body>
     <div id=global>
     </div>
-    <div ng-controller="MainCtrl as main">
-      {{ main.someValue }}
-      <ul>
-        <!-- any data we reference from controller sits under the main variable (our instance) -->
-          <li ng-repeat="item in main.items">
-              {{ item.name }} , {{ item.id }}
-          </li>
-      </ul>
-    </div>
 
+    <div ng-controller="MainCtrl as main">
+      <p>{{ main.someValue }} (using handlebars {})</p>
+      <p ng-bind="main.someValue" > (using ng-bind)</p>
+      <br>
+      <!-- after rendering an expression (what is inside the {{}} handlebar)
+      those values are automatically bound inside Angular, so update dynamically -->
+      {{ main.items.length }} in stock
+      <ul>
+      <!-- any data we reference from controller sits under the main variable (our instance) -->
+        <li ng-repeat="item in main.items" ng-click="main.removeFromStock(item, $index)">
+          {{ item.name }} , {{ item.id }}
+        </li>
+      </ul>
+      <!-- passing a plain JavaScript Object into Angular for evaluation -->
+      <input type="text" ng-model="main.message">
+      <a href="" ng-click="main.showMessage(main.message);">Show my message</a>
+      <br>
+      {{ main.message}} (What is being typed)
+      <br>
+      {{ main.resultMessage }} (after show my message clicked)
+
+      <br>
+      <a ng-href="{{ main.someValue }}">Go (ng-href)</a>
+      <br>
+      <img ng-src="{{ main.anotherValue}}" alt="">
+
+      <div ng-if="main.userExists">
+        Please log in (ng-if)
+      </div>
+
+      <div ng-switch on="main.user.access">
+        <div ng-switch-when="admin">
+          <!-- code for admins -->
+        </div>
+        <div ng-switch-when="user">
+          <!-- code for users -->
+        </div>
+        <div ng-switch-when="author">
+          <!-- code for authors -->
+        </div>
+      </div>
+
+        <a href="" ng-click="showMenu = !showMenu">Toggle menu!</a>
+        <ul ng-show="showMenu">
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+        </ul>
+
+
+
+        <div class="notification" ng-class="{
+            warning: main.response == 'error',
+            ok: main.response == 'success'
+        }">
+            {{ main.responseMsg }}
+        </div>
   </body>
 </html>
