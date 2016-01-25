@@ -9,6 +9,9 @@
 
     <div ng-controller="MainCtrl as main">
       <p>{{ main.someValue }} (using handlebars {})</p>
+      <!--We would use ng-bind when we don't want to see any flicker whilst Angular
+       is loading and parsing data. Angular automatically shields any content that's dynamically created
+       with Directives or inside a dynamic view (ng-view). If your bindings are outside of these, we might see {{ and }} text in the document-->
       <p ng-bind="main.someValue" > (using ng-bind)</p>
       <br>
       <!-- after rendering an expression (what is inside the {{}} handlebar)
