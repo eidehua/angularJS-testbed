@@ -48,10 +48,60 @@ function MainCtrl (UserService, UserServiceFactory) {
     //alert(UserService.sayHello("Service"));
     //alert(UserServiceFactory.sayHello("Factory"))
 }
+/*
+ Creating our own directive (which is built in the template)
+*/
+function someDirective() {
+    return {
+        restrict: 'EA',
+        replace: true,
+        scope: true,
+        controllerAs: 'something', //any controller references inside our template would use something.myMethod()
+        controller: function() {
 
-    /*
-    this could talk to a backend or provide utilities to handle business logic
-    */
+        },
+        link: function($scope, $element, $attrs) {
+            //The link function is called after the element is compiled and injected into the DOM, which means it's the perfect place to do "post-compile" logic, as well as non-Angular logic.
+        },
+        template: [
+            '<div class="some-directive">',
+                'My directive! Can use this in multiple places without having to recreate this markup',
+                '</div>'
+            ].join('')
+    };
+}
+/*
+ Custom directive for composing email.
+*/
+function composeEmail () {
+  return {
+    restrict: 'EA',
+    replace: true,
+    scope: true,
+    controllerAs: 'compose',
+    controller: function () {
+        //mess with compose.message (this.message) and stuff here
+        this.to = "set in controller"
+    },
+    link: function ($scope, $element, $attrs) {
+
+    },
+    template: [
+      '<div class="compose-email">',
+        '<h2>Compose Email</h2>',
+        '<input type="text" placeholder="To..." ng-model="compose.to">',
+        '<input type="text" placeholder="Subject..." ng-model="compose.subject">',
+        '<br>',
+        '<textarea placeholder="Message..." ng-model="compose.message"></textarea>',
+        '<br>',
+        '{{compose.to}}',
+      '</div>'
+    ].join('')
+    };
+}
+/*
+this could talk to a backend or provide utilities to handle business logic
+*/
 function UserService () {
     //service creates a singleton Object created by a service factor
     this.sayHello = function (name) {
@@ -78,7 +128,18 @@ function UserServiceFactory () {
 angular
     .module('app', [])
     .controller('MainCtrl', MainCtrl)
+    .directive('someDirective', someDirective)
+    .directive('composeEmail', composeEmail)
     .service('UserService', UserService)
     .factory('UserServiceFactory', UserServiceFactory);
 
 //$rootScope.someValue = 'Root Scope';
+template: [
+  '<div>',
+    '<ul>',
+      '<li ng-repeat="item in vm.items">',
+        '{{ item }}',
+      '</li>',
+    '</ul>',
+  '</div>'
+].join('')
