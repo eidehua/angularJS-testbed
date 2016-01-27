@@ -12,6 +12,8 @@ function MainCtrl (UserService, UserServiceFactory) {
     vm.response = 'success';
     vm.someValue = 'MainCtrl Scope';
     vm.userExists = true
+    vm.timeNow = new Date().getTime();
+    vm.jsonObj = {"hi": "there", "bye": "co"}
     vm.items = [{
         name: 'Scuba Diving Kit (click to remove)',
         id: 7297510

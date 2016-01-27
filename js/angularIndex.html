@@ -13,6 +13,16 @@
 
     <compose-email></compose-email>
     <div ng-controller="MainCtrl as main">
+
+      <p id='date-filter'>
+      <!--{{ filter_expression | filter : expression : comparator }}-->
+        Today's date: {{ main.timeNow | date:'MM-dd-yyyy' }}
+      </p>
+
+      <pre id='json-filter'>
+      {{ main.jsonObj | json }}
+      </pre>
+
       <p>{{ main.someValue }} (using handlebars {})</p>
       <!--We would use ng-bind when we don't want to see any flicker whilst Angular
        is loading and parsing data. Angular automatically shields any content that's dynamically created
@@ -21,10 +31,11 @@
       <br>
       <!-- after rendering an expression (what is inside the {{}} handlebar)
       those values are automatically bound inside Angular, so update dynamically -->
-      {{ main.items.length }} in stock
+      {{ main.items.length }} in stock, showing at most 3 at a time
       <ul>
       <!-- any data we reference from controller sits under the main variable (our instance) -->
-        <li ng-repeat="item in main.items" ng-click="main.removeFromStock(item, $index)">
+      <!-- orderBy name first! then limitTo -->
+        <li ng-repeat="item in main.items | orderBy:'name' | limitTo:3  "  ng-click="main.removeFromStock(item, $index)">
           {{ item.name }} , {{ item.id }}
         </li>
       </ul>
