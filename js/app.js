@@ -54,6 +54,11 @@ function MainCtrl (UserService, UserServiceFactory) {
         //this is a filter specifically for this controller
         //ex: ng-repeat="item in vm.items | filter:namesStartingWithB"
         //need that "filter:" in order for angular to recognize this function of the controller is actually a filter
+        return function (items, something) {
+            return items.filter(function (item) {
+                return /$b/i.test(item.name);
+            });
+        };
     };
 }
 /*
