@@ -21,7 +21,7 @@
       </p>
 
       <pre id='json-filter'>
-      {{ main.jsonObj | json }}
+      {{ main.jsonObj | json | toLowercase }}
       </pre>
 
       <p>{{ main.someValue }} (using handlebars {})</p>
@@ -36,8 +36,8 @@
       <ul>
       <!-- any data we reference from controller sits under the main variable (our instance) -->
       <!-- orderBy name first! then limitTo -->
-        <li ng-repeat="item in main.items | orderBy:'name' | limitTo:3  "  ng-click="main.removeFromStock(item, $index)">
-          {{ item.name }} , {{ item.id }}
+        <li ng-repeat="item in main.items | orderBy:'name' | limitTo:3 "  ng-click="main.removeFromStock(item, $index)">
+          {{ item.name | toLowercase }} , {{ item.id }}
         </li>
       </ul>
       <!-- passing a plain JavaScript Object into Angular for evaluation -->

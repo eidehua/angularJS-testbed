@@ -13,7 +13,7 @@ function MainCtrl (UserService, UserServiceFactory) {
     vm.someValue = 'MainCtrl Scope';
     vm.userExists = true
     vm.timeNow = new Date().getTime();
-    vm.jsonObj = {"hi": "there", "bye": "co"}
+    vm.jsonObj = {"HI": "there", "bye": "co"}
     vm.items = [{
         name: 'Scuba Diving Kit (click to remove)',
         id: 7297510
@@ -49,11 +49,17 @@ function MainCtrl (UserService, UserServiceFactory) {
     };
     //alert(UserService.sayHello("Service"));
     //alert(UserServiceFactory.sayHello("Factory"))
+
+    vm.namesStartingWithB = function () {
+        //this is a filter specifically for this controller
+        //ex: ng-repeat="item in vm.items | filter:namesStartingWithB"
+        //need that "filter:" in order for angular to recognize this function of the controller is actually a filter
+    };
 }
 /*
  Creating our own directive (which is built in the template)
 */
-function someDirective() {
+function someDirective () {
     return {
         restrict: 'EA',
         replace: true,
@@ -101,6 +107,26 @@ function composeEmail () {
     ].join('')
     };
 }
+
+function toLowercase (){
+    //we return this function closer every time angular needs to run the filter
+    return function (item) {
+        //angular has a make lowercase filter already, but this is easy example
+        return item.toLowerCase();
+    };
+}
+
+function namesStartingWithA () {
+    //we are expecting (items) some kind of dictionary. So use within something like ng-repeat
+    //to pass in the second argument, use something like"
+    //ng-repeat="item in items | namesStartingWithA:something"
+    return function (items, something) {
+        return items.filter(function (item) {
+            return /$a/i.test(item.name);
+        });
+    };
+}
+
 /*
 this could talk to a backend or provide utilities to handle business logic
 */
@@ -132,6 +158,8 @@ angular
     .controller('MainCtrl', MainCtrl)
     .directive('someDirective', someDirective)
     .directive('composeEmail', composeEmail)
+    .filter('toLowercase', toLowercase)
+    .filter('namesStartingWithA', namesStartingWithA)
     .service('UserService', UserService)
     .factory('UserServiceFactory', UserServiceFactory);
 
