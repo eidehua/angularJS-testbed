@@ -158,15 +158,39 @@ function UserServiceFactory () {
     return UserServiceFactory;
 }
 
+function router ($routeProvider) {
+  $routeProvider
+  .when('/inbox', {
+    templateUrl: 'views/inbox.html',
+    controller: 'InboxCtrl',
+    controllerAs: 'inbox'
+  })
+  //dynamic routing: passing in id which is dynamic
+   .when('/inbox/email/:id', {
+    templateUrl: 'views/email.html',
+    controller: 'EmailCtrl',
+    controllerAs: 'email'
+    //If our application then points to /inbox/email/173921938,
+    //Angular will load the same view template and Controller as if it pointed
+    // to /inbox/email/902827312, allowing us to reuse templates for core functionality.
+  })
+  .otherwise({
+    redirectTo: '/inbox'
+  });
+}
+
+
 angular
-    .module('app', [])
+    .module('app', ['ngRoute'])
     .controller('MainCtrl', MainCtrl)
     .directive('someDirective', someDirective)
     .directive('composeEmail', composeEmail)
     .filter('toLowercase', toLowercase)
     .filter('namesStartingWithA', namesStartingWithA)
     .service('UserService', UserService)
-    .factory('UserServiceFactory', UserServiceFactory);
+    .factory('UserServiceFactory', UserServiceFactory)
+    .config(router); //when we are going to use router
+
 
 //$rootScope.someValue = 'Root Scope';
 template: [
