@@ -91,5 +91,9 @@
         <!-- Cross origin request: might need to use a server like live-server -->
         <!--<div ng-view></div>-->
 
+        <!-- need name attribute to namespace the form scope -->
+        <!-- Angular will constantly watch the state and any rules we give inputs, like required (so users have to fill them) -->
+        <form name="myForm"></form>
+
   </body>
 </html>

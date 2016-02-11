@@ -183,7 +183,9 @@ function EmailCtrl ($routeParams, EmailService) {
   // $routeParams { id: 20999851 }
   EmailService
   .get($routeParams.id) // pass the Object in
-  .success(function (response) {})
+  .success(function (response) {
+      //hit REST backend and bring back the JSON for that specific ID
+  })
   .error(function (reason) {});
 }
 
