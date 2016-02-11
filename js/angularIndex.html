@@ -93,7 +93,13 @@
 
         <!-- need name attribute to namespace the form scope -->
         <!-- Angular will constantly watch the state and any rules we give inputs, like required (so users have to fill them) -->
-        <form name="myForm"></form>
+        <form name="myForm">
+            <input type="text" ng-model="user.name" placeholder="Enter your name">
+            <button ng-disabled="!user.name.length">
+              Update name
+            </button>
+        </form>
+
 
   </body>
 </html>
