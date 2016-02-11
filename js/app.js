@@ -179,6 +179,13 @@ function router ($routeProvider) {
   });
 }
 
+function EmailCtrl ($routeParams, EmailService) {
+  // $routeParams { id: 20999851 }
+  EmailService
+  .get($routeParams.id) // pass the Object in
+  .success(function (response) {})
+  .error(function (reason) {});
+}
 
 angular
     .module('app', ['ngRoute'])
@@ -189,7 +196,8 @@ angular
     .filter('namesStartingWithA', namesStartingWithA)
     .service('UserService', UserService)
     .factory('UserServiceFactory', UserServiceFactory)
-    .config(router); //when we are going to use router
+    .config(router) //when we are going to use router
+    .('EmailCtrl', EmailCtrl);
 
 
 //$rootScope.someValue = 'Root Scope';
